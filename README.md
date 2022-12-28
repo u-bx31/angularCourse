@@ -16,4 +16,7 @@
 - Pipes 
 - LifeCycleHooks
 - Comunication Between Component
+- Dependancies Injection
+- Di Providers :
+- how to Work With Api's HttpClient/Rxjs;
 

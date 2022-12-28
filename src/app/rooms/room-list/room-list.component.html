@@ -15,6 +15,7 @@
     <td>{{ room.checkinTime | date }}</td>
     <td>{{ room.rating | number : "1.1-2" }}</td>
     <td><button class="btn btn-outline-dark" (click)="selectRoom(room)">Selected</button></td>
-    <td><button class="btn btn-outline-danger" (click)="handleDelete(room.roomNumber)">Delete</button></td>
+    <td><button class="btn btn-outline-danger" (click)="handleDelete(room.roomNumber || '2')">Delete</button></td>
+    
   </tr>
 </table>

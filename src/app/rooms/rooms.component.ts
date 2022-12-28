@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import { Observable } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { Room, RoomList } from './rooms';
 import { RoomsService } from './services/rooms.service';
@@ -23,15 +31,26 @@ export class RoomsComponent implements AfterViewInit {
   roomList: RoomList[] = [];
 
   @ViewChild(HeaderComponent) headrComponent!: HeaderComponent;
-  @ViewChildren(HeaderComponent) headrChildrenComponent!: QueryList<HeaderComponent>;
+  @ViewChildren(HeaderComponent)
+  headrChildrenComponent!: QueryList<HeaderComponent>;
 
-  constructor(private roomService: RoomsService){}
+  constructor(private roomService: RoomsService) {}
+
+  stream = new Observable((observe) => {
+    observe.next('user1');
+    observe.next('user2');
+    observe.complete();
+  });
+
   //ngOnInit LifeCycleHook
   ngOnInit() {
-    this.roomService.getRooms().subscribe( rooms=>{
-      console.log('rooms',rooms);
-      this.roomList = rooms ;
-    }); 
+    this.stream.subscribe({
+      next: (u) => console.log(u),
+      complete: () => console.log('Complete'),
+    });
+    this.roomService.getRooms().subscribe((rooms) => {
+      this.roomList = rooms;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -44,12 +63,38 @@ export class RoomsComponent implements AfterViewInit {
   }
 
   toggleCount = () => {
-    if (this.stateDiv == 'hide') {
-      return;
-    } else {
-      this.numberRooms = this.numberRooms + 1;
+    // if (this.stateDiv == 'hide') {
+    //   return;
+    // } else {
+    //   this.numberRooms = this.numberRooms + 1;
+    // }
+
+    const room : RoomList = {
+      roomType : 'Suit',
+      price : 1300,
+      rating : 5,
+      checkinTime : new Date('03-13-2021'),
+      checkoutTime : new Date('03-14-2021')
     }
+
+    this.roomService.addRooms(room).subscribe((room)=>{
+      this.roomList = room as [];
+    })
   };
+  toggleEdit = ()=>{
+    const room : RoomList = {
+      roomNumber : '488d3b9c-8bfb-4cdb-bfc0-f955d751e291',
+      roomType : 'Suit',
+      price : 100,
+      rating : 2.3,
+      checkinTime : new Date('03-13-2021'),
+      checkoutTime : new Date('03-14-2021')
+    }
+
+    this.roomService.editRooms(room).subscribe((room)=>{
+      this.roomList = room;
+    })
+  }
   toggleHide = () => {
     this.hideRooms = !this.hideRooms;
     // if (this.hideRooms == true) {
@@ -58,11 +103,13 @@ export class RoomsComponent implements AfterViewInit {
     //   this.stateDiv = 'show';
     // }
   };
-  handleDelete = (id: String) => {
-    return (this.roomList = this.roomList.filter((room) => room.roomNumber !== id));
+  handleDelete = (id: string) => {
+    this.roomService.deleteRooms(id).subscribe((room)=>{
+      this.roomList = room;
+    })
+
   };
   selectRoom = (room: RoomList) => {
     this.selectedRoom = room;
   };
-
 }

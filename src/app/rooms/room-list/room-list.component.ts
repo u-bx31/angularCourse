@@ -17,13 +17,13 @@ export class RoomListComponent implements OnChanges,OnDestroy {
   //componentCommuication 
   @Input() rooms : RoomList[] =[];
   @Output() selectedRoom  = new EventEmitter<RoomList>();
-  @Output() handleDeleted  = new EventEmitter<String>();
+  @Output() handleDeleted  = new EventEmitter<string>();
 
   selectRoom = (room : RoomList)=>{
     this.selectedRoom.emit(room);
   }
 
-  handleDelete = (id : String)=>{
+  handleDelete = (id : string)=>{
     this.handleDeleted.emit(id);
   }
 
