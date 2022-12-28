@@ -1,0 +1,19 @@
+
+<app-header></app-header>
+<app-header></app-header>
+<app-header></app-header>
+<!-- event biding -->
+<button (click)="toggleCount()">add</button>
+<button (click)="toggleHide()">hide</button>
+
+<!--  property biding -->
+<div [className]="stateDiv" *ngIf="hideRooms">
+  <h4>RoomsNumber : {{ numberRooms }}</h4>
+
+  <h4>Room Selected :</h4>
+  <p *ngIf="selectedRoom">{{selectedRoom | json}}</p>
+
+  <h4 >Rooms</h4>
+  <!-- Call Component -->
+  <app-room-list [rooms]="roomList" (handleDeleted)="handleDelete($event)" (selectedRoom)="selectRoom($event)"></app-room-list>
+</div>

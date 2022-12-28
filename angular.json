@@ -30,7 +30,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -68,7 +69,8 @@
               "browserTarget": "angular-prj:build:production"
             },
             "development": {
-              "browserTarget": "angular-prj:build:development"
+              "browserTarget": "angular-prj:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
