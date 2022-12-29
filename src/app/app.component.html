@@ -7,13 +7,11 @@
       <h2 *ngSwitchCase="'admin'">Welcome Admin</h2>
     </div>
     <hr>
-    <app-employee></app-employee>
-    <hr>
-    <app-rooms class="p-4"></app-rooms>
+    <router-outlet></router-outlet>
+    
     <!-- <ng-template #user></ng-template>
-  
     <div #user></div> -->
   </div>
 </app-container>
 
-<router-outlet></router-outlet>
+

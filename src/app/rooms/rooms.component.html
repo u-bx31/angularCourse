@@ -10,11 +10,17 @@
 <!--  property biding -->
 <div [className]="stateDiv" *ngIf="hideRooms">
   <h4>RoomsNumber : {{ numberRooms }}</h4>
+  
 
   <h4>Room Selected :</h4>
   <p *ngIf="selectedRoom">{{selectedRoom | json}}</p>
 
   <h4 >Rooms</h4>
   <!-- Call Component -->
-  <app-room-list [rooms]="roomList" (handleDeleted)="handleDelete($event)" (selectedRoom)="selectRoom($event)"></app-room-list>
+  <app-room-list [rooms]="rooms$ |async" (handleDeleted)="handleDelete($event)" (selectedRoom)="selectRoom($event)"></app-room-list>
+  <!-- <h4>RoomsNumber : {{ roomsCount$ }}</h4> -->
+
+  {{loader ? 'Loading Data' : 'done'}}
+  {{byte}}
+
 </div>
