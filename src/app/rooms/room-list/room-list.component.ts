@@ -11,11 +11,11 @@ export class RoomListComponent implements OnChanges,OnDestroy {
 
   //ngOnchanges LifieCycle Hook;
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('List-Changes :',changes);
+    // console.log('List-Changes :',changes);
   }
 
   //componentCommuication 
-  @Input() rooms : RoomList[] =[];
+  @Input() rooms : RoomList[] |null =[];
   @Output() selectedRoom  = new EventEmitter<RoomList>();
   @Output() handleDeleted  = new EventEmitter<string>();
 

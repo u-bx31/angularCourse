@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -6,7 +7,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { Room, RoomList } from './rooms';
 import { RoomsService } from './services/rooms.service';
@@ -27,6 +28,8 @@ export class RoomsComponent implements AfterViewInit {
     totalRooms: 100,
   };
   selectedRoom!: RoomList;
+  loader: boolean = true;
+  byte: number = 0;
 
   roomList: RoomList[] = [];
 
@@ -42,14 +45,39 @@ export class RoomsComponent implements AfterViewInit {
     observe.complete();
   });
 
+  numberCount!: number;
+
+  rooms$ = this.roomService.getRooms$;
+  // not working ??
+  // roomsCount$ = this.roomService.getRooms$.pipe(
+  //   map((rooms) => console.log(rooms))
+  // )
+
   //ngOnInit LifeCycleHook
   ngOnInit() {
     this.stream.subscribe({
       next: (u) => console.log(u),
       complete: () => console.log('Complete'),
     });
-    this.roomService.getRooms().subscribe((rooms) => {
-      this.roomList = rooms;
+    // this.roomService.getRooms$.subscribe((rooms) => {
+    //   this.roomList = rooms;
+    //   this.numberCount = rooms.length
+    // });
+
+    this.roomService.getPhotos().subscribe((event) => {
+      switch (event.type) {
+        case HttpEventType.Sent: {
+          console.log('request sent');
+          break;
+        }
+        case HttpEventType.DownloadProgress: {
+          this.byte += event.loaded;
+          break;
+        }
+        case HttpEventType.Response: {
+          console.log(event.body);
+        }
+      }
     });
   }
 
@@ -69,32 +97,32 @@ export class RoomsComponent implements AfterViewInit {
     //   this.numberRooms = this.numberRooms + 1;
     // }
 
-    const room : RoomList = {
-      roomType : 'Suit',
-      price : 1300,
-      rating : 5,
-      checkinTime : new Date('03-13-2021'),
-      checkoutTime : new Date('03-14-2021')
-    }
+    const room: RoomList = {
+      roomType: 'Suit',
+      price: 1300,
+      rating: 5,
+      checkinTime: new Date('03-13-2021'),
+      checkoutTime: new Date('03-14-2021'),
+    };
 
-    this.roomService.addRooms(room).subscribe((room)=>{
+    this.roomService.addRooms(room).subscribe((room) => {
       this.roomList = room as [];
-    })
+    });
   };
-  toggleEdit = ()=>{
-    const room : RoomList = {
-      roomNumber : '488d3b9c-8bfb-4cdb-bfc0-f955d751e291',
-      roomType : 'Suit',
-      price : 100,
-      rating : 2.3,
-      checkinTime : new Date('03-13-2021'),
-      checkoutTime : new Date('03-14-2021')
-    }
+  toggleEdit = () => {
+    const room: RoomList = {
+      roomNumber: '488d3b9c-8bfb-4cdb-bfc0-f955d751e291',
+      roomType: 'Suit',
+      price: 100,
+      rating: 2.3,
+      checkinTime: new Date('03-13-2021'),
+      checkoutTime: new Date('03-14-2021'),
+    };
 
-    this.roomService.editRooms(room).subscribe((room)=>{
+    this.roomService.editRooms(room).subscribe((room) => {
       this.roomList = room;
-    })
-  }
+    });
+  };
   toggleHide = () => {
     this.hideRooms = !this.hideRooms;
     // if (this.hideRooms == true) {
@@ -104,10 +132,9 @@ export class RoomsComponent implements AfterViewInit {
     // }
   };
   handleDelete = (id: string) => {
-    this.roomService.deleteRooms(id).subscribe((room)=>{
+    this.roomService.deleteRooms(id).subscribe((room) => {
       this.roomList = room;
-    })
-
+    });
   };
   selectRoom = (room: RoomList) => {
     this.selectedRoom = room;

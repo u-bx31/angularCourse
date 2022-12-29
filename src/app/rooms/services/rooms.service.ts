@@ -3,7 +3,8 @@ import { RoomList } from '../rooms';
 import { APP_SERVICE } from 'src/app/AppConfig/appConfig.service';
 import { AppConfig } from 'src/app/AppConfig/appConfig.interface';
 import { LocalStorageToken } from 'src/localStorage.token';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { catchError, map, of, shareReplay, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,15 @@ export class RoomsService {
 
   roomList: RoomList[] = [];
 
+  error$ = new Subject<string>;
+  getRooms$ = this.httpClient.get<RoomList[]>('/api/rooms').pipe(
+    shareReplay(1),
+    catchError((err)=>{
+      console.log('error',err.message);
+      return of([]);
+    })
+  );
+
   getRooms(){
     return this.httpClient.get<RoomList[]>('/api/rooms');
   }
@@ -31,5 +41,16 @@ export class RoomsService {
 
   deleteRooms(id : string){
     return this.httpClient.delete<RoomList[]>(`/api/rooms/${id}`);
+  }
+
+  getPhotos(){
+    const request = new HttpRequest(
+      'GET',
+      'https://jsonplaceholder.typicode.com/photos',
+      {
+        reportProgress : true,
+      }
+    )
+    return this.httpClient.request(request);
   }
 }

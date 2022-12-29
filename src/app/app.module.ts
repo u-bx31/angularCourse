@@ -10,7 +10,8 @@ import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { APP_CONFIG, APP_SERVICE } from './AppConfig/appConfig.service';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
+import { RequestInterceptor } from './request.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,11 @@ import {HttpClientModule} from '@angular/common/http'
       provide: APP_SERVICE,
       useValue: APP_CONFIG,
     },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : RequestInterceptor,
+      multi : true,
+    }
   ],
   bootstrap: [AppComponent],
 })
