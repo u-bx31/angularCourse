@@ -65,19 +65,19 @@ export class RoomsComponent implements AfterViewInit {
     // });
 
     this.roomService.getPhotos().subscribe((event) => {
-      switch (event.type) {
-        case HttpEventType.Sent: {
-          console.log('request sent');
-          break;
-        }
-        case HttpEventType.DownloadProgress: {
-          this.byte += event.loaded;
-          break;
-        }
-        case HttpEventType.Response: {
-          console.log(event.body);
-        }
-      }
+      // switch (event.type) {
+      //   case HttpEventType.Sent: {
+      //     console.log('request sent');
+      //     break;
+      //   }
+      //   case HttpEventType.DownloadProgress: {
+      //     this.byte += event.loaded;
+      //     break;
+      //   }
+      //   case HttpEventType.Response: {
+      //     console.log(event.body);
+      //   }
+      // }
     });
   }
 
@@ -134,6 +134,7 @@ export class RoomsComponent implements AfterViewInit {
   handleDelete = (id: string) => {
     this.roomService.deleteRooms(id).subscribe((room) => {
       this.roomList = room;
+      console.log(room);
     });
   };
   selectRoom = (room: RoomList) => {

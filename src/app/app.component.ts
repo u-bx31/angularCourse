@@ -11,9 +11,6 @@ import { RoomsComponent } from './rooms/rooms.component';
 export class AppComponent  {
 
   title = 'angular-prj1';
-  role = 'admin';
-
-
 
   //---// when we use ng-template use viewContainerRef
   // @ViewChild('user',{read : ViewContainerRef}) vsr!:ViewContainerRef;

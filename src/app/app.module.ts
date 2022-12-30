@@ -12,6 +12,20 @@ import { EmployeeComponent } from './employee/employee.component';
 import { APP_CONFIG, APP_SERVICE } from './AppConfig/appConfig.service';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { RequestInterceptor } from './request.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { Page404Component } from './page404/page404.component';
+import { BookingRoomsComponent } from './rooms/booking-rooms/booking-rooms.component';
+import { AddRoomComponent } from './rooms/Crud/add-room/add-room.component';
+import { FormsModule } from '@angular/forms';
+import { IndexComponent } from './index/index.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +35,16 @@ import { RequestInterceptor } from './request.interceptor';
     HeaderComponent,
     ContainerComponent,
     EmployeeComponent,
+    NavBarComponent,
+    Page404Component,
+    BookingRoomsComponent,
+    AddRoomComponent,
+    IndexComponent,
+    LoginComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule,HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule,HttpClientModule, 
+    BrowserAnimationsModule, LayoutModule, MatToolbarModule, MatButtonModule, 
+    MatSidenavModule, MatIconModule, MatListModule ,FormsModule],
   providers: [
     {
       provide: APP_SERVICE,
