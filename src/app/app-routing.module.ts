@@ -12,8 +12,10 @@ const routes: Routes = [
 
   { path: 'index', component: IndexComponent , children : [
     { path: 'employee', component: EmployeeComponent },
-    { path: 'rooms', component: RoomsComponent },
-    { path: 'rooms/:id', component: BookingRoomsComponent },
+    { path: 'rooms', component: RoomsComponent, children :[
+      { path: ':id', component: BookingRoomsComponent },
+    ] },
+    
     { path: 'rooms?add', component: AddRoomComponent },
     { path: '', redirectTo: '/index/rooms', pathMatch: 'full' },
   ]},

@@ -16,7 +16,17 @@
 - Pipes 
 - LifeCycleHooks
 - Comunication Between Component
+- create services `ng g s nameService`
 - Dependancies Injection
 - Di Providers :
+- Routers 
+- - router service
 - how to Work With Api's HttpClient/Rxjs;
+- - create intercepter `ng g interceptor nameInterceptor`
+- using Forms `import FormsModel`
+- - validators of forms
+- - form Directives `ng g d directiveName`
+
+
+
 

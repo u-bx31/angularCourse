@@ -26,6 +26,8 @@ import { AddRoomComponent } from './rooms/Crud/add-room/add-room.component';
 import { FormsModule } from '@angular/forms';
 import { IndexComponent } from './index/index.component';
 import { LoginComponent } from './login/login.component';
+import { HoverDirective } from './Directives/hover.directive';
+import { EmailValidaterDirective } from './Directives/email-validater.directive';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { LoginComponent } from './login/login.component';
     AddRoomComponent,
     IndexComponent,
     LoginComponent,
+    HoverDirective,
+    EmailValidaterDirective,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule,HttpClientModule, 
     BrowserAnimationsModule, LayoutModule, MatToolbarModule, MatButtonModule, 
